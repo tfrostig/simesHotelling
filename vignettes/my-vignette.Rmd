@@ -1,0 +1,137 @@
+---
+title: "Introduction to simesHotelling"
+author: "Tzviel Frostig"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+library(simesHotelling)
+library(MASS)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+### Introduction 
+
+The package contains the different variants of the SH test, allowing to test high-dimensional mean vectors for when $p > n$. 
+The tests available in the packge are: Parametric SH, non-equal covariance SH, and non-parametric SH test (permutation test). 
+
+
+#### Parametric tests 
+
+
+Creating the sample data $n_X = n_y = 50, p = 100, \Sigma_X = \Sigma_Y = I, \mu_x = \vec{0}, \mu_y = \vec{0}$. 
+
+##### One sample SH 
+
+```{r}
+library(MASS)
+X <- mvrnorm(50, rep(0, 100), diag(100)) 
+```
+
+One sample SH test where $m = 30, B = 100$ and $\delta = \vec{0}$
+
+```{r}
+SHTest(X = X,
+       samp.size = 30,
+       iterations = 100,
+       delta = rep(0, 100))
+```
+
+It returns the p-value of the test, the F-statistics of the each group of sampled dimensions and the p-value of teh resulting F test for each group of sampled dimensions. 
+
+##### Randomness of test 
+Notice that the test is random so each iterations will yield a slightly different p-value unless you use set.seed. 
+
+```{r}
+SHTest(X = X,
+       samp.size = 30,
+       iterations = 100,
+       delta = rep(0, 100))$`P-value`
+
+set.seed(999)
+SHTest(X = X,
+       samp.size = 30,
+       iterations = 100,
+       delta = rep(0, 100))$`P-value`
+set.seed(999)
+SHTest(X = X,
+       samp.size = 30,
+       iterations = 100,
+       delta = rep(0, 100))$`P-value`
+
+```
+
+
+##### Two sample SH 
+It can also be used for testing the difference in the mean vector of X and Y. $Y$ is generated from the same distribution as $X$.
+
+```{r}
+Y <- mvrnorm(50, rep(0, 100), diag(100)) 
+
+SHTest(X = X,
+       Y = Y, 
+       samp.size = 30,
+       iterations = 100,
+       delta = rep(0, 100))
+```
+
+###### Two sample SH for non-equal covariance matrices  
+
+As well as testing the difference in the mean vector why X and Y have different covariance matrices. 
+
+Generating data $n_X = 50, n_Y = 79, \mu_X = \mu_Y = 0, \Sigma_X = I, \Sigma_Y = ar.mat$. 
+```{r}
+ar.mat <- 0.8^abs(outer(1:100, 1:100, "-"))
+### Generating data 
+X <- mvrnorm(50, rep(0, 100), diag(100)) 
+Y <- mvrnorm(79, rep(0, 100), ar.mat)
+
+
+SHTest(X, 
+       Y, 
+       samp.size = 40, 
+       iterations = 100, 
+       equal.cov = FALSE,
+       delta = rep(0, 100))
+```
+
+
+
+#### Non - Parametric tests 
+
+It is all possible to conduct a non-parametric test. We will describe here the workflow. 
+
+Generating data $n_X = 50, n_Y = 100, p = 200, \Sigma = I$. 
+```{r}
+X <- mvrnorm(50, rep(0, 200), diag(200)) 
+Y <- mvrnorm(100, rep(0, 200), diag(200))
+```
+
+Preparing the data, how many permutation should be conducted, the number of dimensions sampled and the number of sampling to conduct.  
+
+```{r}
+L <- PrepareNonPara(X, Y,
+               permutation.num = 100, 
+               iter.num = 100, 
+               samp.size = 50) 
+```
+
+The functions returns a large list including the original X, Y, a list of permuted X and Y, this is done to allow comparisions to different permutations tests, and the samp.mat which is the matrix indicating how the samples should be done. 
+Now the non-parametric test can be conducted, two options are available, 'SH' based on Simes and Thullin (see A high-dimensional two-sample test for the mean using random subspaces
+- Mans Thulin)
+
+```{r}
+SHnonPara(L, method = 'SH')
+SHnonPara(L, method = 'Thulin')
+```
+

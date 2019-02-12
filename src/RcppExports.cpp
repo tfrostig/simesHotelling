@@ -123,18 +123,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// Permute
-List Permute(NumericMatrix X, NumericMatrix Y);
-RcppExport SEXP _simesHotelling_Permute(SEXP XSEXP, SEXP YSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type X(XSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type Y(YSEXP);
-    rcpp_result_gen = Rcpp::wrap(Permute(X, Y));
-    return rcpp_result_gen;
-END_RCPP
-}
 // RandomClusterSH
 NumericMatrix RandomClusterSH(arma::vec x, arma::vec center, arma::mat cov, IntegerVector group_vector, IntegerVector size_vec, int obs);
 RcppExport SEXP _simesHotelling_RandomClusterSH(SEXP xSEXP, SEXP centerSEXP, SEXP covSEXP, SEXP group_vectorSEXP, SEXP size_vecSEXP, SEXP obsSEXP) {
@@ -282,7 +270,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_simesHotelling_CombineVectors", (DL_FUNC) &_simesHotelling_CombineVectors, 2},
     {"_simesHotelling_HotelingFind", (DL_FUNC) &_simesHotelling_HotelingFind, 5},
     {"_simesHotelling_CreateSol", (DL_FUNC) &_simesHotelling_CreateSol, 4},
-    {"_simesHotelling_Permute", (DL_FUNC) &_simesHotelling_Permute, 2},
     {"_simesHotelling_RandomClusterSH", (DL_FUNC) &_simesHotelling_RandomClusterSH, 6},
     {"_simesHotelling_pMatMaker", (DL_FUNC) &_simesHotelling_pMatMaker, 1},
     {"_simesHotelling_dist2", (DL_FUNC) &_simesHotelling_dist2, 2},

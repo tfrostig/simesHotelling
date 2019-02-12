@@ -134,29 +134,6 @@ NumericVector CreateSol(arma::vec x, arma::vec center, arma::mat cov, IntegerVec
 
 
 // [[Rcpp::export]]
-List Permute(NumericMatrix X, NumericMatrix Y) {
-  int n_x = X.nrow(); 
-  int n_y = Y.nrow();
-  int p = X.ncol(); 
-  NumericMatrix cut_mat(n_x + n_y, p);
-  IntegerVector indices_vector = seq_len(n_x + n_y);
-  IntegerVector temp_samp = RcppArmadillo::sample(indices_vector, n_x + n_y, false) - 1;
-  
-  for (int i = 0; i < n_x + n_y; i++) { 
-    if (i < n_x) { 
-      cut_mat.row(i) = X.row(i);
-    }
-    if (i > n_x) { 
-      cut_mat.row(i) = Y.row(i - n_x - 1);
-    }
-  }
-  NumericMatrix X_perm = cut_mat(Range(0,n_x-1), Range(0,p-1)); 
-  NumericMatrix Y_perm = cut_mat(Range(n_x,n_x + n_y-1), Range(0,p-1)); 
-  List out = List::create(X_perm, Y_perm);
-  return(out); 
-}
-
-// [[Rcpp::export]]
 NumericMatrix RandomClusterSH(arma::vec x, arma::vec center, arma::mat cov, IntegerVector group_vector, IntegerVector size_vec, int obs) {
   IntegerVector uniq_group = unique(group_vector);
   int n = group_vector.size();
@@ -245,8 +222,6 @@ NumericMatrix FastNIPS(NumericMatrix XY, IntegerVector Ind, bool maxFlag ) {
 }
 
 
-
-
 // [[Rcpp::export]]
 double FreedomDegreeFind(arma::mat covX, arma::mat covY, double nX, double nY) {
   arma::mat sXtild   = covX / nX;
@@ -301,5 +276,3 @@ NumericMatrix HotelingNonEqual(NumericMatrix X, NumericMatrix Y, IntegerMatrix s
   } 
   return(store_mat);
 }
-
- 
