@@ -109,9 +109,14 @@ SimesHotellingNonEqual <- function(X , Y = NULL, samp.size, iterations, cent = r
   p        <- ncol(X)
   samp.mat <- t(replicate(iterations, sample(p, samp.size)))
   hot.test <- HotelingNonEqual(X, Y, samp.mat, cent)
-  p.vec    <- 1 - pf(((hot.test[,2]- samp.size - 1) / (samp.size * hot.test[,2])) * hot.test[,1],
-                     samp.size, hot.test[,2] - samp.size - 1)
-  return(simesTest(p.vec))
+  F.vec    <- (hot.test[ ,2] - samp.size  + 1) * hot.test[ ,1] / (hot.test[ ,2] * samp.size) 
+  p.vec    <- 1 - pf(F.vec,
+                     samp.size,
+                     hot.test[,2] - samp.size - 1)
+  return(list('P-value' = simesTest(p.vec),
+              'F.vec'   = F.vec,
+              'p.vec'   = p.vec,
+              'df'      = hot.test[ ,2]))
 }
 
 ## Simes test 
@@ -156,12 +161,12 @@ SHnonPara <- function(permute.list, method = 'SH') {
                        p) %>% apply(2, simesTest)
     permute.pval     <- mean(org.result > permute.result) + 1 / K
   }
-  if (method == 'Thulin') { 
+  if (method == 'Thullin') { 
     org.result       <- org.stat %>% mean()
     permute.result   <- permute.vec %>% apply(2, mean)
     permute.pval     <- mean(org.result <= permute.result) + 1 / K
   }
-  if (!(method %in% c('SH', 'Thulin'))) {
+  if (!(method %in% c('SH', 'Thullin'))) {
     warning('Method is not recognized, acceptable methods are SH and Thullin')
     org.result     <- org.stat 
     permute.result <- permute.vec

@@ -123,22 +123,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// RandomClusterSH
-NumericMatrix RandomClusterSH(arma::vec x, arma::vec center, arma::mat cov, IntegerVector group_vector, IntegerVector size_vec, int obs);
-RcppExport SEXP _simesHotelling_RandomClusterSH(SEXP xSEXP, SEXP centerSEXP, SEXP covSEXP, SEXP group_vectorSEXP, SEXP size_vecSEXP, SEXP obsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type center(centerSEXP);
-    Rcpp::traits::input_parameter< arma::mat >::type cov(covSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type group_vector(group_vectorSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type size_vec(size_vecSEXP);
-    Rcpp::traits::input_parameter< int >::type obs(obsSEXP);
-    rcpp_result_gen = Rcpp::wrap(RandomClusterSH(x, center, cov, group_vector, size_vec, obs));
-    return rcpp_result_gen;
-END_RCPP
-}
 // pMatMaker
 NumericMatrix pMatMaker(NumericMatrix statMat);
 RcppExport SEXP _simesHotelling_pMatMaker(SEXP statMatSEXP) {
@@ -147,31 +131,6 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericMatrix >::type statMat(statMatSEXP);
     rcpp_result_gen = Rcpp::wrap(pMatMaker(statMat));
-    return rcpp_result_gen;
-END_RCPP
-}
-// dist2
-double dist2(NumericVector v1, NumericVector v2);
-RcppExport SEXP _simesHotelling_dist2(SEXP v1SEXP, SEXP v2SEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type v1(v1SEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type v2(v2SEXP);
-    rcpp_result_gen = Rcpp::wrap(dist2(v1, v2));
-    return rcpp_result_gen;
-END_RCPP
-}
-// FastNIPS
-NumericMatrix FastNIPS(NumericMatrix XY, IntegerVector Ind, bool maxFlag);
-RcppExport SEXP _simesHotelling_FastNIPS(SEXP XYSEXP, SEXP IndSEXP, SEXP maxFlagSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericMatrix >::type XY(XYSEXP);
-    Rcpp::traits::input_parameter< IntegerVector >::type Ind(IndSEXP);
-    Rcpp::traits::input_parameter< bool >::type maxFlag(maxFlagSEXP);
-    rcpp_result_gen = Rcpp::wrap(FastNIPS(XY, Ind, maxFlag));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -216,49 +175,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _simesHotelling_rcpparma_hello_world() {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _simesHotelling_rcpparma_outerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _simesHotelling_rcpparma_innerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _simesHotelling_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_simesHotelling_PowerMat", (DL_FUNC) &_simesHotelling_PowerMat, 2},
@@ -270,17 +186,10 @@ static const R_CallMethodDef CallEntries[] = {
     {"_simesHotelling_CombineVectors", (DL_FUNC) &_simesHotelling_CombineVectors, 2},
     {"_simesHotelling_HotelingFind", (DL_FUNC) &_simesHotelling_HotelingFind, 5},
     {"_simesHotelling_CreateSol", (DL_FUNC) &_simesHotelling_CreateSol, 4},
-    {"_simesHotelling_RandomClusterSH", (DL_FUNC) &_simesHotelling_RandomClusterSH, 6},
     {"_simesHotelling_pMatMaker", (DL_FUNC) &_simesHotelling_pMatMaker, 1},
-    {"_simesHotelling_dist2", (DL_FUNC) &_simesHotelling_dist2, 2},
-    {"_simesHotelling_FastNIPS", (DL_FUNC) &_simesHotelling_FastNIPS, 3},
     {"_simesHotelling_FreedomDegreeFind", (DL_FUNC) &_simesHotelling_FreedomDegreeFind, 4},
     {"_simesHotelling_HotelingCalc", (DL_FUNC) &_simesHotelling_HotelingCalc, 3},
     {"_simesHotelling_HotelingNonEqual", (DL_FUNC) &_simesHotelling_HotelingNonEqual, 4},
-    {"_simesHotelling_rcpparma_hello_world", (DL_FUNC) &_simesHotelling_rcpparma_hello_world, 0},
-    {"_simesHotelling_rcpparma_outerproduct", (DL_FUNC) &_simesHotelling_rcpparma_outerproduct, 1},
-    {"_simesHotelling_rcpparma_innerproduct", (DL_FUNC) &_simesHotelling_rcpparma_innerproduct, 1},
-    {"_simesHotelling_rcpparma_bothproducts", (DL_FUNC) &_simesHotelling_rcpparma_bothproducts, 1},
     {NULL, NULL, 0}
 };
 

@@ -134,36 +134,6 @@ NumericVector CreateSol(arma::vec x, arma::vec center, arma::mat cov, IntegerVec
 
 
 // [[Rcpp::export]]
-NumericMatrix RandomClusterSH(arma::vec x, arma::vec center, arma::mat cov, IntegerVector group_vector, IntegerVector size_vec, int obs) {
-  IntegerVector uniq_group = unique(group_vector);
-  int n = group_vector.size();
-  int rep_num = size_vec.size(); 
-  int group_num = max(group_vector);
-  
-  IntegerVector indices_vector = seq_len(n) - 1;
-  NumericMatrix sol_mat(group_num, rep_num);
-  for (int i=1; i < group_num + 1; i++) {
-    IntegerVector temp_samp_2 = indices_vector[group_vector == i];
-    for (int j=0; j < rep_num; j++ ) {
-      int temp_rand = floor(temp_samp_2.size() * size_vec(j)) + 1; 
-      
-      if (temp_samp_2.isNULL()) {
-        sol_mat(i-1,j) = NA_REAL;  
-      } else {
-         Rcpp::wrap(temp_samp_2);
-         arma::uvec temp_samp = as<arma::uvec>(Rcpp::wrap(temp_samp_2));
-         sol_mat(i-1,j) =  max(sqrt((obs - temp_rand) / (2 * (temp_rand))) * RandomHoteling(x.elem(temp_samp),
-                                                center.elem(temp_samp),
-                                                cov.submat(temp_samp, temp_samp),
-                                                temp_rand,
-                                                temp_rand));
-      }
-    } 
-  } 
-  return(sol_mat);
-} 
-
-// [[Rcpp::export]]
 NumericMatrix pMatMaker(NumericMatrix statMat) {
   int p = statMat.ncol();
   int n = statMat.nrow();
@@ -179,47 +149,6 @@ NumericMatrix pMatMaker(NumericMatrix statMat) {
   return(Pmat);
 }
 
-
-// [[Rcpp::export]]
-double dist2(NumericVector v1, NumericVector v2) 
-{
-  double sum=0;
-  int p = v1.length();
-  for (int i=0; i<p; ++i)
-  {
-    sum+=( v1[i] - v2[i] ) * ( v1[i] - v2[i] );
-  }
-  //	return sqrt(sum);
-  return sum;
-}
-
-// [[Rcpp::export]]
-NumericMatrix FastNIPS(NumericMatrix XY, IntegerVector Ind, bool maxFlag ) {
-  Ind = Ind - 1;
-  int p = Ind.size();
-  int n = XY.nrow();
-  int tempInd = 0;
-  NumericMatrix distMat(p, n);
-  if (maxFlag == FALSE) {
-    for (int j = 0; j < p; j++) {
-      tempInd = Ind(j);
-      for (int i = 0; i < n; i++){
-        distMat(j, i) = dist2(XY(i,_), XY(tempInd,_));
-      }
-      distMat(j, tempInd) = NA_REAL; 
-    }
-  }
-  if (maxFlag == TRUE) {
-    for (int j = 0; j < p; j++) {
-      tempInd = Ind(j);
-      for (int i = 0; i < n; i++){
-        distMat(j, i) = max(abs(XY(i,_) - XY(tempInd,_)));
-      }
-      distMat(j, tempInd) = NA_REAL; 
-    }
-  }
-  return(distMat); 
-}
 
 
 // [[Rcpp::export]]

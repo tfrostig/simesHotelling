@@ -37,20 +37,8 @@ CreateSol <- function(x, center, cov, group_vector) {
     .Call(`_simesHotelling_CreateSol`, x, center, cov, group_vector)
 }
 
-RandomClusterSH <- function(x, center, cov, group_vector, size_vec, obs) {
-    .Call(`_simesHotelling_RandomClusterSH`, x, center, cov, group_vector, size_vec, obs)
-}
-
 pMatMaker <- function(statMat) {
     .Call(`_simesHotelling_pMatMaker`, statMat)
-}
-
-dist2 <- function(v1, v2) {
-    .Call(`_simesHotelling_dist2`, v1, v2)
-}
-
-FastNIPS <- function(XY, Ind, maxFlag) {
-    .Call(`_simesHotelling_FastNIPS`, XY, Ind, maxFlag)
 }
 
 FreedomDegreeFind <- function(covX, covY, nX, nY) {
@@ -63,21 +51,5 @@ HotelingCalc <- function(X, Y, center) {
 
 HotelingNonEqual <- function(X, Y, samp_mat, center) {
     .Call(`_simesHotelling_HotelingNonEqual`, X, Y, samp_mat, center)
-}
-
-rcpparma_hello_world <- function() {
-    .Call(`_simesHotelling_rcpparma_hello_world`)
-}
-
-rcpparma_outerproduct <- function(x) {
-    .Call(`_simesHotelling_rcpparma_outerproduct`, x)
-}
-
-rcpparma_innerproduct <- function(x) {
-    .Call(`_simesHotelling_rcpparma_innerproduct`, x)
-}
-
-rcpparma_bothproducts <- function(x) {
-    .Call(`_simesHotelling_rcpparma_bothproducts`, x)
 }
 
