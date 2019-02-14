@@ -1,7 +1,7 @@
 # simesHotelling
 Simes Hotelling package 
 
-This is the GitHub page for the simesHotelling package for global null testing best on dimensions sampling. 
+This is the GitHub page for the simesHotelling package for global null testing based on dimensions sampling. 
 
 In order to install the lastest development version run:
 
