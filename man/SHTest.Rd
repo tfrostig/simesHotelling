@@ -26,3 +26,32 @@ A list including the dimensions used for analysis, the simes P-value, and the pa
 \description{
 Conduct Simes Hotelling test
 }
+\examples{
+library(MASS)
+X <- mvrnorm(50, rep(0, 100), diag(100)) 
+### One-sample global null test 
+SHTest(X = X,
+      samp.size = 30,
+      iterations = 100,
+      delta = rep(0, 100))
+\dontrun{ 
+
+Y <- mvrnorm(50, rep(0, 100), diag(100)) 
+### Two-sample global null test 
+SHTest(X = X,
+      Y = Y, 
+      samp.size = 30,
+      iterations = 100,
+      delta = rep(0, 100))
+### Non-equal covariance two-sample global null test        
+### Generating data 
+X <- mvrnorm(50, rep(0, 100), diag(100)) 
+Y <- mvrnorm(79, rep(0, 100), 2 * diag(100))
+SHTest(X, 
+      Y, 
+      samp.size = 40, 
+      iterations = 100, 
+      equal.cov = FALSE,
+      delta = rep(0, 100))
+}
+}

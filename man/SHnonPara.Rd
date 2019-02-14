@@ -18,3 +18,16 @@ the p-value of the permutaiton test, method used in the test and number of permu
 \description{
 Conducts non parametric test, based on sampling of dimensions
 }
+\examples{
+\\donotrun{
+library(MASS)
+X <- mvrnorm(20, rep(0, 50), diag(50)) 
+Y <- mvrnorm(20, rep(0, 50), diag(50))
+L <- PrepareNonPara(X, Y,
+permutation.num = 100, 
+iter.num = 100, 
+samp.size = 50) 
+SHnonPara(L, method = 'SH')
+SHnonPara(L, method = 'Thulin')
+}
+}

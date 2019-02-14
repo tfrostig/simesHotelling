@@ -6,6 +6,7 @@ usethis::use_package('dplyr')
 #' @importFrom dplyr "%>%"
 NULL
 
+
 ## Simes Hoteling Test For equal covariance matrices and non equal covariance matrices
 ## Accepts two matrices returns Simes P-value
 #' Conduct Simes Hotelling test
@@ -14,7 +15,35 @@ NULL
 #' @param samp.size Number of dimensions (m) sampled at each iteration 
 #' @param iterations Number of iterations (B) conducted  
 #' @param equal.cov Logical, indicating if the equal.cov version of the test should be conducted 
-#' @param delta Vector of expected differences between the mean vector of X and Y under the null 
+#' @param delta Vector of expected differences between the mean vector of X and Y under the null
+#' @examples 
+#' library(MASS)
+#' X <- mvrnorm(50, rep(0, 100), diag(100)) 
+#' ### One-sample global null test 
+#' SHTest(X = X,
+#'       samp.size = 30,
+#'       iterations = 100,
+#'       delta = rep(0, 100))
+#' \dontrun{ 
+#' 
+#' Y <- mvrnorm(50, rep(0, 100), diag(100)) 
+#' ### Two-sample global null test 
+#' SHTest(X = X,
+#'       Y = Y, 
+#'       samp.size = 30,
+#'       iterations = 100,
+#'       delta = rep(0, 100))
+#' ### Non-equal covariance two-sample global null test        
+#' ### Generating data 
+#' X <- mvrnorm(50, rep(0, 100), diag(100)) 
+#' Y <- mvrnorm(79, rep(0, 100), 2 * diag(100))
+#' SHTest(X, 
+#'       Y, 
+#'       samp.size = 40, 
+#'       iterations = 100, 
+#'       equal.cov = FALSE,
+#'       delta = rep(0, 100))
+#' }
 #' @return A list including the dimensions used for analysis, the simes P-value, and the parameters used to conduct the test, including samp.size, iteration and the equal.cov flag. 
 #' @export
 SHTest <- function(X,
@@ -142,6 +171,18 @@ simesTest <- function(p.vec)
 #' @param method the type of test to conduct SH or Thullin 
 #' @return A list containing the original statistic defined by method, permutation statistic vector, 
 #' the p-value of the permutaiton test, method used in the test and number of permutations 
+#' @examples 
+#' \donotrun{
+#' library(MASS)
+#' X <- mvrnorm(20, rep(0, 50), diag(50)) 
+#' Y <- mvrnorm(20, rep(0, 50), diag(50))
+#' L <- PrepareNonPara(X, Y,
+#' permutation.num = 100, 
+#' iter.num = 100, 
+#' samp.size = 50) 
+#' SHnonPara(L, method = 'SH')
+#' SHnonPara(L, method = 'Thulin')
+#' }
 #' @export
 SHnonPara <- function(permute.list, method = 'SH') {
   n.x <- nrow(permute.list$Original$X.org)
@@ -204,6 +245,16 @@ PermuteTal <- function(X, Y) {
 #' @param permutation.mat Number of permutations to conduct 
 #' @param iter.num Number of samples of dimensions to conduct 
 #' @param samp.size Number of dimensions to sample at each sampling 
+#' @examples
+#' \donotrun{
+#' library(MASS)
+#' X <- mvrnorm(20, rep(0, 50), diag(50)) 
+#' Y <- mvrnorm(20, rep(0, 50), diag(50))
+#' L <- PrepareNonPara(X, Y,
+#' permutation.num = 100, 
+#' iter.num = 100, 
+#' samp.size = 50) 
+#' }
 #' @return A list which consists of Original X and Y matrices, Permutation a list length of permutation.num
 #' consists of shuffled X and Y and samp.mat a matrix of iter.num on samp.size dimensions 
 #' @export

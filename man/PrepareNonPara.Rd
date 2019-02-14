@@ -24,3 +24,14 @@ consists of shuffled X and Y and samp.mat a matrix of iter.num on samp.size dime
 \description{
 Prepares a list for non-parametric testing
 }
+\examples{
+\\donotrun{
+library(MASS)
+X <- mvrnorm(20, rep(0, 50), diag(50)) 
+Y <- mvrnorm(20, rep(0, 50), diag(50))
+L <- PrepareNonPara(X, Y,
+permutation.num = 100, 
+iter.num = 100, 
+samp.size = 50) 
+}
+}
