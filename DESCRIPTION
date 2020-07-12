@@ -8,10 +8,11 @@ Maintainer: Tzviel Frostig <tfrostig@gmail.com>
 Description: Tests high-dimensional mean vectors, based on the Simes Hotelling test
 License: GPL-2
 Imports: 
-    dplyr, 
-    Rcpp
+    dplyr,
+    Rcpp,
+    MASS
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Encoding: UTF-8
 Suggests: 
     testthat,

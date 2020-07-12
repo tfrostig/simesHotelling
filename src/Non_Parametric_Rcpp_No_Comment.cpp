@@ -165,8 +165,6 @@ double FreedomDegreeFind(arma::mat covX, arma::mat covY, double nX, double nY) {
 
 
 
-
-
 // [[Rcpp::export]]
 double HotelingCalc(NumericMatrix X, NumericMatrix Y, arma::vec center) {
   int nx = X.nrow(); 

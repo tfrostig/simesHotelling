@@ -2,10 +2,8 @@
 #' @useDynLib simesHotelling, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
 NULL
-usethis::use_package('dplyr')
 #' @importFrom dplyr "%>%"
 NULL
-
 
 ## Simes Hoteling Test For equal covariance matrices and non equal covariance matrices
 ## Accepts two matrices returns Simes P-value
@@ -172,7 +170,7 @@ simesTest <- function(p.vec)
 #' @return A list containing the original statistic defined by method, permutation statistic vector, 
 #' the p-value of the permutaiton test, method used in the test and number of permutations 
 #' @examples 
-#' \donotrun{
+#' \dontrun{
 #' library(MASS)
 #' X <- mvrnorm(20, rep(0, 50), diag(50)) 
 #' Y <- mvrnorm(20, rep(0, 50), diag(50))
@@ -242,11 +240,11 @@ PermuteTal <- function(X, Y) {
 #' Prepares a list for non-parametric testing 
 #' @param X A matrix of nx observations on p dimensions  
 #' @param Y A matrix of ny observations on p dimensions
-#' @param permutation.mat Number of permutations to conduct 
+#' @param permutation.num Number of permutations to conduct 
 #' @param iter.num Number of samples of dimensions to conduct 
 #' @param samp.size Number of dimensions to sample at each sampling 
 #' @examples
-#' \donotrun{
+#' \dontrun{
 #' library(MASS)
 #' X <- mvrnorm(20, rep(0, 50), diag(50)) 
 #' Y <- mvrnorm(20, rep(0, 50), diag(50))
